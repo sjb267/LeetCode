@@ -1,0 +1,32 @@
+给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。
+
+示例 1：
+
+输入：nums = [-4,-1,0,3,10]
+输出：[0,1,9,16,100]
+解释：平方后，数组变为 [16,1,0,9,100]
+排序后，数组变为 [0,1,9,16,100]
+示例 2：
+
+输入：nums = [-7,-3,2,3,11]
+输出：[4,9,9,49,121]
+
+思路：创建两个指针，左指针指向数组开头，右指针指向数组尾部，将两个指针的值互相比较，大的值则平方后并从新数组的尾部到，慢慢从尾部此昂头填充。指针所指向的值较大的则移动。
+
+vector<int> sortedSquares(vector<int>& nums) {
+    int k = nums.size()-1;
+    vector<int> arr(k+1);
+    for(int left=0, right=nums.size()-1; left <= right; ) {
+        int l = nums[left] * nums[left];
+        int r = nums[right] * nums[right];
+        if(l > r) {
+            arr[k--] = l;
+            left++;
+        }
+        else {
+            arr[k--] = r;
+            right--;
+        }
+    }
+    return arr;
+}
