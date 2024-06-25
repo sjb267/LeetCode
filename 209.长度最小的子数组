@@ -1,0 +1,40 @@
+给定一个含有 n 个正整数的数组和一个正整数 target 。
+
+找出该数组中满足其总和大于等于 target 的长度最小的 
+子数组
+ [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
+
+示例 1：
+
+输入：target = 7, nums = [2,3,1,2,4,3]
+输出：2
+解释：子数组 [4,3] 是该条件下的长度最小的子数组。
+示例 2：
+
+输入：target = 4, nums = [1,4,4]
+输出：1
+示例 3：
+
+输入：target = 11, nums = [1,1,1,1,1,1,1,1]
+输出：0
+
+
+// 滑动窗口、
+/* end指针先行动，每次行动都会将指向的值加入sum，sum的作用是判断是都满足target值。
+  每当大于等于target时都会记录双指针围起来的区域的元素个数，并于ans判断哪个较小，
+  较小的则保存起来。之后begin往右边移动一次，sum也会相应的减少（减的值时begin之前指的值） 
+  */
+int minSubArrayLen(int target, vector<int>& nums) {
+      int begin = 0;
+      int ans = INT32_MAX;
+      int sum = 0;
+      for(int end = 0; end < nums.size(); end++) {
+          sum += nums[end];
+          while(sum >= target) {
+              int lg = end - begin + 1;
+              ans = ans < lg ? ans : lg;
+              sum -= nums[begin++];
+          }
+      }
+      return ans == INT32_MAX ? 0 : ans;
+  }
