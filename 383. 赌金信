@@ -1,0 +1,35 @@
+给你两个字符串：ransomNote 和 magazine ，判断 ransomNote 能不能由 magazine 里面的字符构成。
+
+如果可以，返回 true ；否则返回 false 。
+
+magazine 中的每个字符只能在 ransomNote 中使用一次。
+
+示例 1：
+
+输入：ransomNote = "a", magazine = "b"
+输出：false
+示例 2：
+
+输入：ransomNote = "aa", magazine = "ab"
+输出：false
+示例 3：
+
+输入：ransomNote = "aa", magazine = "aab"
+输出：true
+
+
+// 使用哈希表数组，记录magazine字符串的字符次数，下标为为字符的映射，值为字符出现的次数。
+// ransomNote对应哈希表，有则次数--，若哈希表里value为-1则直接返回false。
+
+bool canConstruct(string ransomNote, string magazine) {
+    int hash[26];
+    memset(hash,0,sizeof(hash));
+    for(char x:magazine) {
+        hash[x-'a']++;
+    }
+    for(char x:ransomNote) {
+        hash[x-'a']--;
+        if(hash[x-'a'] < 0) return false;
+    }
+    return true;
+}
