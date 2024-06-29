@@ -1,0 +1,28 @@
+给定两个数组 nums1 和 nums2 ，返回 它们的交集。输出结果中的每个元素一定是唯一的。我们可以不考虑输出结果的顺序 。
+
+ 
+
+示例 1：
+
+输入：nums1 = [1,2,2,1], nums2 = [2,2]
+输出：[2]
+示例 2：
+
+输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+输出：[9,4]
+解释：[4,9] 也是可通过的
+
+// 使用哈希表（unordered_set: 每个值都在同个集合，里面的值不会重复)
+//将nums1值都丢进哈希表，之后使用nums2的值判断哈希表的值能否对应，能则取值放进另一个哈希表（result）。
+
+vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        unordered_set<int> hash;
+        unordered_set<int> result;
+        hash.insert(nums1.begin(),nums1.end());
+        for(int i : nums2) {
+            if(hash.find(i) != hash.end()) {
+                result.insert(i);
+            }
+        }
+        return vector<int>(result.begin(), result.end());
+    }
