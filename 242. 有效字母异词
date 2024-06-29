@@ -1,0 +1,36 @@
+给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
+
+注意：若 s 和 t 中每个字符出现的次数都相同，则称 s 和 t 互为字母异位词。
+
+ 
+
+示例 1:
+
+输入: s = "anagram", t = "nagaram"
+输出: true
+示例 2:
+
+输入: s = "rat", t = "car"
+输出: false
+
+
+//使用哈希表数组，每个字符映射在数组的下标，也就是key。A为下标0，持续到Z，下表为25.value为一个字符串里指定字符(数组的下标)的数量
+//循环第一个字符串，并记录在哈希表。再循环第二个字符串，并对应哈希表删除每一个值，（再循环哈希表，若里面的值不为0，则返回false，否则为true。
+
+bool isAnagram(string s, string t) {
+        if(s.length() != t.length()) return false;
+        int hash[26];
+        for(int i=0; i<s.length(); i++) {
+            int code = s[i] - 97;
+            hash[code]++;
+        }
+        for(int i=0; i<t.length(); i++) {
+            int code = t[i] - 97;
+            hash[code]--;
+            if(hash[code] < 0){
+                return false;
+            }
+        }
+        //其实我这里没有循环哈希表，也是通过了
+        return true;
+    }
