@@ -27,3 +27,39 @@ nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
 解释：唯一可能的三元组和为 0 。
 
 
+
+
+//使用双指针
+
+vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(), nums.end()); //数组先进行排序
+        int right = nums.size()-1;
+        for(int i = 0; i < right-1; i++) {
+            if(nums[i] > 0) { // 由于大于0,的后面的指针无论怎样加都是大于0的
+                return ans;
+            }
+            if(i > 0 && nums[i] == nums[i-1]) { //也是去掉i重复的情况
+                continue;
+            }
+            int left = i+1;  //left指针都在i的右边
+            int right = nums.size()-1; //right指针都在数组最后边
+            while(right > left) {
+                if(nums[i] + nums[left] + nums[right] < 0) {
+                    left++;
+                }
+                else if(nums[i] + nums[left] + nums[right] > 0) {
+                    right--;
+                }
+                else {
+                    ans.push_back(vector<int>{nums[i],nums[left],nums[right]});
+                    while (right > left && nums[right] == nums[right - 1]) right--; //去掉重复的情况
+                    while (right > left && nums[left] == nums[left + 1]) left++; //去掉重复的情况
+                    //指针同时走
+                    right--;
+                    left++;
+                }
+            }
+        }
+        return ans;
+    }
