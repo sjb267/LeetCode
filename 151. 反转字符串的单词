@@ -64,3 +64,24 @@ string reverseWords(string s) {
 }
 
 LeetCode思路
+
+string reverseWords(string s) {
+    reverse(s.begin(),s.end());
+    int newIndex = 0;
+    int n = s.size();
+    for(int i=0; i<n; i++) {
+        if(s[i] != ' ') {
+            if(newIndex != 0) {
+                s[newIndex++] = ' ';
+            }
+            int end = i;
+            while(end < n && s[end] != ' ') {
+                s[newIndex++] = s[end++];
+            }
+            reverse(s.begin()+newIndex-(end-i), s.begin()+newIndex);
+            i = end;
+        }
+    }
+    s.erase(s.begin()+newIndex, s.end());
+    return s;
+}
