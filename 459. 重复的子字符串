@@ -26,3 +26,33 @@ bool repeatedSubstringPattern(string s) {
 
 // kmp算法
 
+void buildnext(int next[], string s) { //计算next数组
+    int n = s.size();
+    int i=1;
+    int j=0;
+    next[0] = 0;
+    while(i < n){
+        if(s[j] == s[i]) {
+            j++;
+            next[i++] = j;
+        }
+        else {
+            if(j == 0) {
+                next[i++] = 0;
+            }
+            else {
+                j = next[j-1];
+            }
+        }
+    }
+}
+
+bool repeatedSubstringPattern(string s) {
+    int n = s.size();
+    int next[n];
+    buildnext(next, s);
+    if(next[n-1] == 0) { //为0直接为false
+        return false;
+    }
+    return n % (n - next[n-1]) == 0; //这题的精髓
+}
